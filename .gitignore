@@ -1,0 +1,47 @@
+# Secrets — never commit
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+credentials/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv
+
+# Logs
+*.log
+webhook_logs.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node / Netlify
+node_modules/
+.netlify/
+
+# Build artifacts
+dist/
+build/
+
+# Local history / temp
+.bash_history
+*.tmp
+*.bak
