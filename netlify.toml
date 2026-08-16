@@ -1,0 +1,38 @@
+# CINIS NEXUS — Netlify (static + pure Node functions, no heavy npm deps)
+[build]
+  publish = "."
+  command = "echo build-ok"
+  functions = "netlify/functions"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Use default zisi bundler (no esbuild install)
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "zisi"
+
+[[redirects]]
+  from = "/api/health"
+  to = "/.netlify/functions/health"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/paystack-webhook"
+  to = "/.netlify/functions/paystack-webhook"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+  force = false
+
+# Do not force SPA for real files; only unknown paths
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  force = false

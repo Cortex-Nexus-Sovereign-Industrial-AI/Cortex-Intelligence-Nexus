@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Cortex AI Nexus — Autonomous Industrial Intelligence</title>
+<meta name="description" content="Cortex AI Nexus — autonomous intelligence and industrial automation workspace by Michael Ujuku Morim · CINIS NEXUS INDUSTRY OGOJA">
+<link rel="canonical" href="https://cortex-platforms.netlify.app/">
+<meta name="theme-color" content="#0b0f19">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0f19;--panel:#121826;--panel2:#1a2234;--border:#2a3548;--text:#e8eef8;--muted:#8b9bb8;--accent:#4f6ef7;--cyan:#22d3ee;--green:#22c55e;--amber:#f59e0b;--red:#f87171;--radius:12px;--font:'Inter',system-ui,sans-serif;--mono:'JetBrains Mono',monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;font-family:var(--font);background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+a{color:var(--cyan);text-decoration:none}a:hover{text-decoration:underline}
+button{font-family:inherit;cursor:pointer}
+.app{display:flex;flex-direction:column;min-height:100vh;max-width:1200px;margin:0 auto}
+.topbar{display:flex;align-items:center;gap:.75rem;padding:.65rem 1rem;border-bottom:1px solid var(--border);background:rgba(11,15,25,.95);position:sticky;top:0;z-index:40;backdrop-filter:blur(10px)}
+.logo{display:flex;align-items:center;gap:.45rem;font-weight:800;letter-spacing:.02em;flex-shrink:0}
+.logo-mark{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#4f6ef7,#22d3ee);display:grid;place-items:center;font-size:.9rem}
+.search{flex:1;max-width:420px;display:flex;align-items:center;gap:.5rem;background:var(--panel);border:1px solid var(--border);border-radius:999px;padding:.4rem .9rem}
+.search input{flex:1;background:transparent;border:none;outline:none;color:var(--text);font-size:.85rem}
+.search input::placeholder{color:var(--muted)}
+.top-actions{display:flex;align-items:center;gap:.5rem;margin-left:auto}
+.icon-btn{width:36px;height:36px;border-radius:10px;border:1px solid var(--border);background:var(--panel);color:var(--text);display:grid;place-items:center;position:relative}
+.badge-dot{position:absolute;top:4px;right:4px;width:8px;height:8px;border-radius:50%;background:var(--red)}
+.user-pill{display:flex;align-items:center;gap:.4rem;background:var(--panel);border:1px solid var(--border);border-radius:999px;padding:.25rem .6rem .25rem .3rem;font-size:.8rem}
+.avatar{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#06b6d4);display:grid;place-items:center;font-size:.75rem;font-weight:700}
+.navscroll{display:flex;gap:.35rem;padding:.5rem .75rem;overflow-x:auto;border-bottom:1px solid var(--border);background:var(--panel);-webkit-overflow-scrolling:touch}
+.navscroll::-webkit-scrollbar{display:none}
+.nav-item{flex-shrink:0;display:flex;align-items:center;gap:.35rem;padding:.45rem .75rem;border-radius:8px;border:1px solid transparent;background:transparent;color:var(--muted);font-size:.8rem;font-weight:500}
+.nav-item.active,.nav-item:hover{background:var(--panel2);color:var(--text);border-color:var(--border)}
+.nav-item .live{font-size:.65rem;color:var(--green);font-family:var(--mono);margin-left:.15rem}
+.main{flex:1;padding:1rem;padding-bottom:5rem}
+.page{display:none}.page.active{display:block}
+.page-title{font-size:1.35rem;font-weight:700;letter-spacing:-.02em;margin-bottom:.25rem}
+.page-sub{color:var(--muted);font-size:.9rem;margin-bottom:1.25rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.75rem;margin-bottom:1rem}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:1rem}
+.card.stat .label{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:.35rem}
+.card.stat .value{font-size:1.35rem;font-weight:700}
+.card.stat .hint{font-size:.75rem;color:var(--muted);margin-top:.25rem}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);margin-right:.35rem}
+.section{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:1rem;overflow:hidden}
+.section-h{display:flex;align-items:center;justify-content:space-between;padding:.85rem 1rem;border-bottom:1px solid var(--border);font-weight:600;font-size:.9rem}
+.section-b{padding:1rem}
+.log{font-family:var(--mono);font-size:.72rem;line-height:1.7;color:var(--muted);max-height:220px;overflow-y:auto}
+.log .ok{color:var(--green)}.log .warn{color:var(--amber)}.log .info{color:var(--cyan)}
+.qa-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.qa{display:flex;flex-direction:column;align-items:flex-start;gap:.2rem;padding:.85rem;border-radius:10px;border:1px solid var(--border);background:var(--panel2);color:var(--text);text-align:left}
+.qa strong{font-size:.85rem}.qa span{font-size:.72rem;color:var(--muted)}
+.qa:hover{border-color:var(--accent)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;padding:.6rem 1rem;border-radius:8px;font-weight:600;font-size:.85rem;border:none}
+.btn-primary{background:linear-gradient(135deg,var(--accent),#3b5bdb);color:#fff}
+.btn-ghost{background:transparent;color:var(--text);border:1px solid var(--border)}
+.btn-sm{padding:.35rem .7rem;font-size:.75rem}
+.list a{display:flex;justify-content:space-between;align-items:center;padding:.75rem 0;border-bottom:1px solid var(--border);color:var(--text);text-decoration:none}
+.list a:last-child{border-bottom:none}.list a span{color:var(--muted);font-size:.8rem}
+.list a:hover{color:var(--cyan)}
+.chat{display:flex;flex-direction:column;gap:.75rem;min-height:240px;max-height:360px;overflow-y:auto;margin-bottom:.75rem}
+.bubble{max-width:90%;padding:.75rem .9rem;border-radius:12px;font-size:.88rem;line-height:1.5}
+.bubble.ai{background:var(--panel2);border:1px solid var(--border);align-self:flex-start}
+.bubble.user{background:rgba(79,110,247,.2);border:1px solid rgba(79,110,247,.35);align-self:flex-end}
+.bubble .who{font-size:.7rem;color:var(--muted);margin-bottom:.25rem;font-weight:600}
+.chat-input{display:flex;gap:.5rem}
+.chat-input input{flex:1;background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;color:var(--text);outline:none}
+.voices{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.75rem}
+.voice{padding:.35rem .7rem;border-radius:999px;border:1px solid var(--border);background:var(--panel2);color:var(--muted);font-size:.75rem}
+.voice.active{border-color:var(--accent);color:var(--text);background:rgba(79,110,247,.15)}
+form .field{margin-bottom:.85rem}
+form label{display:block;font-size:.75rem;color:var(--muted);margin-bottom:.3rem}
+form input,form select{width:100%;background:var(--panel2);border:1px solid var(--border);border-radius:8px;padding:.65rem .8rem;color:var(--text);outline:none}
+.table{width:100%;border-collapse:collapse;font-size:.8rem}
+.table th,.table td{padding:.55rem .4rem;text-align:left;border-bottom:1px solid var(--border)}
+.table th{color:var(--muted);font-weight:500;font-size:.7rem;text-transform:uppercase}
+.footer{border-top:1px solid var(--border);padding:1rem;text-align:center;font-size:.75rem;color:var(--muted)}
+.overlay{position:fixed;inset:0;background:rgba(5,8,15,.85);display:flex;align-items:center;justify-content:center;z-index:100;padding:1rem;backdrop-filter:blur(6px)}
+.overlay.hidden{display:none}
+.auth-card{width:100%;max-width:380px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:1.5rem}
+.auth-card h2{font-size:1.25rem;margin-bottom:.25rem}
+.auth-card .sub{color:var(--muted);font-size:.85rem;margin-bottom:1.25rem}
+.auth-card .actions{display:flex;flex-direction:column;gap:.5rem;margin-top:1rem}
+.auth-card .toggle{text-align:center;font-size:.8rem;color:var(--muted);margin-top:.75rem}
+@media(min-width:768px){.main{padding:1.5rem 1.5rem 3rem}.qa-grid{grid-template-columns:repeat(3,1fr)}.grid{grid-template-columns:repeat(3,1fr)}}
+</style>
+</head>
+<body>
+<div class="overlay" id="auth">
+  <div class="auth-card">
+    <div class="logo" style="margin-bottom:1rem"><span class="logo-mark">⚡</span> CORTEX AI NEXUS</div>
+    <h2 id="auth-title">Welcome to Cortex AI Nexus</h2>
+    <p class="sub">Autonomous industrial intelligence · CINIS NEXUS · Ogoja</p>
+    <form id="auth-form">
+      <div class="field" id="name-field" style="display:none"><label>Full name</label><input id="auth-name" placeholder="Michael Ujuku Morim"></div>
+      <div class="field"><label>Email</label><input id="auth-email" type="email" required placeholder="you@email.com"></div>
+      <div class="field"><label>Password</label><input id="auth-password" type="password" required minlength="6" placeholder="••••••••"></div>
+      <div class="actions">
+        <button type="submit" class="btn btn-primary" id="auth-btn" style="width:100%">Sign In</button>
+        <button type="button" class="btn btn-ghost" style="width:100%" onclick="guestEnter()">Continue as Guest</button>
+      </div>
+    </form>
+    <p class="toggle"><span id="toggle-text">No account?</span> <a href="#" id="toggle-mode">Create one</a></p>
+    <p class="toggle" style="margin-top:.5rem"><a href="member-dashboard.html">Member API dashboard →</a></p>
+  </div>
+</div>
+
+<div class="app" id="app" style="display:none">
+  <header class="topbar">
+    <div class="logo"><span class="logo-mark">⚡</span> CORTEX AI NEXUS</div>
+    <div class="search"><span style="opacity:.5">🔍</span><input id="global-search" placeholder="Search platform, commands, AI tasks..."></div>
+    <div class="top-actions">
+      <button class="icon-btn" title="Notifications">🔔<span class="badge-dot"></span></button>
+      <div class="user-pill"><span class="avatar" id="user-avatar">G</span><span id="user-name">Guest</span></div>
+    </div>
+  </header>
+
+  <nav class="navscroll" id="nav">
+    <button class="nav-item active" data-page="dashboard">📊 Dashboard</button>
+    <button class="nav-item" data-page="ai">🤖 AI <span class="live">LIVE</span></button>
+    <button class="nav-item" data-page="about">🏛️ Enterprise</button>
+    <button class="nav-item" data-page="business">🏢 Business</button>
+    <button class="nav-item" data-page="commerce">🛒 Commerce</button>
+    <button class="nav-item" data-page="payments">💳 Payments</button>
+    <button class="nav-item" data-page="orders">📦 Orders</button>
+    <button class="nav-item" data-page="docs">📚 Docs</button>
+    <button class="nav-item" data-page="settings">⚙️ Settings</button>
+  </nav>
+
+  <main class="main">
+    <div class="page active" id="page-dashboard">
+      <h1 class="page-title">Dashboard</h1>
+      <p class="page-sub">Cortex AI Nexus — real-time industrial operations overview</p>
+      <div class="grid">
+        <div class="card stat"><div class="label">Platform Status</div><div class="value"><span class="dot"></span>LIVE</div><div class="hint">cortex-platforms.netlify.app</div></div>
+        <div class="card stat"><div class="label">AI Agents Active</div><div class="value">4</div><div class="hint">Cortex · MikeComplex · Builder · Scout</div></div>
+        <div class="card stat"><div class="label">Revenue Today</div><div class="value" id="rev-today">₦0.00</div><div class="hint">Paystack ready</div></div>
+        <div class="card stat"><div class="label">Data Sovereignty</div><div class="value">100%</div><div class="hint">Edge-resilient · Offline-first</div></div>
+        <div class="card stat"><div class="label">Orders Today</div><div class="value" id="ord-today">0</div><div class="hint">Across all channels</div></div>
+        <div class="card stat"><div class="label">Session</div><div class="value" id="session-label">Guest</div><div class="hint">Local / API when hosted</div></div>
+      </div>
+      <div class="section">
+        <div class="section-h">⚡ System Activity Log <button class="btn btn-ghost btn-sm" onclick="clearLog()">Clear</button></div>
+        <div class="section-b"><div class="log" id="activity-log"></div></div>
+      </div>
+      <div class="section">
+        <div class="section-h">⚡ Quick Actions</div>
+        <div class="section-b"><div class="qa-grid">
+          <button class="qa" onclick="go('ai');preset('Write a professional partnership email for Cortex AI Nexus')"><strong>✉️ Generate Email</strong><span>AI business correspondence</span></button>
+          <button class="qa" onclick="go('ai');preset('Write a Python Paystack webhook handler')"><strong>💻 Write Code</strong><span>Python / JS automation</span></button>
+          <button class="qa" onclick="go('ai');preset('Create a marketing campaign for Cortex AI Nexus')"><strong>🎯 Marketing</strong><span>Campaign copy & strategy</span></button>
+          <button class="qa" onclick="go('ai');preset('Analyze Nigerian industrial AI market opportunities')"><strong>📈 Analyze</strong><span>Market intelligence</span></button>
+          <button class="qa" onclick="go('about')"><strong>🏛️ Enterprise</strong><span>Architecture & product</span></button>
+          <button class="qa" onclick="go('commerce')"><strong>🛒 Product Listing</strong><span>Shopify-ready surfaces</span></button>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="page" id="page-ai">
+      <h1 class="page-title">AI Workspace</h1>
+      <p class="page-sub">Four agent personas — Cortex AI Nexus modular runtime</p>
+      <div class="voices">
+        <button class="voice active" data-v="cortex" onclick="setVoice('cortex')">⚡ Cortex Nexus</button>
+        <button class="voice" data-v="mike" onclick="setVoice('mike')">🧠 MikeComplex</button>
+        <button class="voice" data-v="builder" onclick="setVoice('builder')">🔨 Builder</button>
+        <button class="voice" data-v="scout" onclick="setVoice('scout')">🔍 Scout</button>
+      </div>
+      <div class="section"><div class="section-b">
+        <div class="chat" id="chat"></div>
+        <div class="chat-input">
+          <input id="ai-input" placeholder="Ask the active agent..." onkeydown="if(event.key==='Enter')sendAI()">
+          <button class="btn btn-primary" onclick="sendAI()">Send</button>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="page" id="page-about">
+      <h1 class="page-title">Cortex AI Nexus</h1>
+      <p class="page-sub">Enterprise description · technical overview architecture</p>
+      <div class="section"><div class="section-b">
+        <p style="margin-bottom:1rem;line-height:1.65">An advanced autonomous intelligence and industrial automation workspace engineered for high-throughput edge execution, real-time activity rendering, and end-to-end digital pipeline orchestration.</p>
+        <div class="grid">
+          <div class="card stat"><div class="label">Orchestration</div><div class="value" style="font-size:1rem">Autonomous pipelines</div><div class="hint">Streams, workflows, content funnels, SDK deployments</div></div>
+          <div class="card stat"><div class="label">AI modules</div><div class="value" style="font-size:1rem">Hand-set granularity</div><div class="hint">Direct-control settings, API adapters, concurrency engines</div></div>
+          <div class="card stat"><div class="label">Compute</div><div class="value" style="font-size:1rem">Parallel / GPU-aligned</div><div class="hint">Heavy workloads, predictive analytics, telemetry</div></div>
+          <div class="card stat"><div class="label">Edge</div><div class="value" style="font-size:1rem">Localized execution</div><div class="hint">Hybrid servers, MCP integrations, resilient offload</div></div>
+          <div class="card stat"><div class="label">DevOps</div><div class="value" style="font-size:1rem">GitHub + Netlify</div><div class="hint">CI/CD, browser interfaces, system auditing</div></div>
+          <div class="card stat"><div class="label">Industry</div><div class="value" style="font-size:1rem">CINIS NEXUS</div><div class="hint">Ogoja · Michael Ujuku Morim</div></div>
+        </div>
+        <p style="margin-top:1rem;font-size:.85rem;color:var(--muted)">Canonical: <a href="https://github.com/Cortex-Nexus-Sovereign-Industrial-AI/cortex-platform/blob/main/docs/product/CORTEX_AI_NEXUS.md" target="_blank" rel="noopener">CORTEX_AI_NEXUS.md</a></p>
+      </div></div>
+      <div class="section"><div class="section-h">Technical overview architecture</div><div class="section-b">
+        <pre style="font-family:var(--mono);font-size:.68rem;line-height:1.55;color:var(--muted);overflow-x:auto;margin-bottom:1rem;white-space:pre-wrap">[ Cognitive Strategy & NLP ] ---> [ Dynamic Policy & Reasoning ]
+                                          |
+                                          v
+[ Kinetic & Robotic Control ] <--> [ Zero-Trust Security Mesh ]
+                                          |
+                                          v
+[ Real-Time Telemetry ]   <--> [ Autonomous Inventory Engine ]</pre>
+        <div class="grid">
+          <div class="card stat"><div class="label">Vector 1</div><div class="value" style="font-size:.95rem">Cognitive cyber-strategy</div><div class="hint">NLP threat parsing · policy synthesis · triage matrices</div></div>
+          <div class="card stat"><div class="label">Vector 2</div><div class="value" style="font-size:.95rem">Kinetic & robotic</div><div class="hint">AGV safety · TLS/Noise M2M · adaptive paths</div></div>
+          <div class="card stat"><div class="label">Vector 3</div><div class="value" style="font-size:.95rem">Zero-trust inventory</div><div class="hint">RFID/CV ledgers · continuous re-auth · auto isolation</div></div>
+        </div>
+        <p style="margin-top:1rem;font-size:.8rem;color:var(--muted)">Targets: sub-second TTD · <5ms kinetic loop · >99.99% continuity · <a href="https://github.com/Cortex-Nexus-Sovereign-Industrial-AI/cortex-platform/blob/main/docs/product/TECHNICAL_OVERVIEW_ARCHITECTURE.md" target="_blank" rel="noopener">Full architecture doc</a></p>
+      </div></div>
+    </div>
+
+    <div class="page" id="page-business">
+      <h1 class="page-title">Business Hub</h1>
+      <p class="page-sub">Identity, contact, and infrastructure nodes</p>
+      <div class="section"><div class="section-h">Executive & identity</div><div class="section-b list">
+        <a href="https://about.me/mikecomplexai" target="_blank">about.me/mikecomplexai <span>Identity</span></a>
+        <a href="https://github.com/mikecomplexai-7" target="_blank">GitHub mikecomplexai-7 <span>Founder</span></a>
+        <a href="https://github.com/Cortex-Nexus-Sovereign-Industrial-AI/cortex-platform" target="_blank">cortex-platform repo <span>Command</span></a>
+        <a href="https://mikecomplexai.substack.com" target="_blank">Substack <span>Publication</span></a>
+      </div></div>
+      <div class="section"><div class="section-h">Contact</div><div class="section-b list">
+        <a href="mailto:cortexnexus@proton.me">cortexnexus@proton.me <span>Email</span></a>
+        <a href="https://wa.me/2349010251577" target="_blank">+234 901 025 1577 <span>WhatsApp</span></a>
+        <a href="https://x.com/MikeComplexAie" target="_blank">@MikeComplexAie <span>X</span></a>
+      </div></div>
+    </div>
+
+    <div class="page" id="page-commerce">
+      <h1 class="page-title">Commerce</h1>
+      <p class="page-sub">Shopify · cortex-intelligence-nexus.myshopify.com</p>
+      <div class="section"><div class="section-b">
+        <a class="btn btn-primary" href="https://cortex-intelligence-nexus.myshopify.com" target="_blank">Open Shopify store</a>
+      </div></div>
+    </div>
+
+    <div class="page" id="page-payments">
+      <h1 class="page-title">Payments</h1>
+      <p class="page-sub">Paystack checkout · demo ledger until API host is live</p>
+      <div class="section"><div class="section-b">
+        <form id="pay-form" onsubmit="return fakePay(event)">
+          <div class="field"><label>Customer name</label><input id="pay-name" required></div>
+          <div class="field"><label>Email</label><input id="pay-email" type="email" required></div>
+          <div class="field"><label>Amount (NGN)</label><input id="pay-amount" type="number" min="100" value="1000" required></div>
+          <div class="field"><label>Product</label><input id="pay-product" value="Cortex AI Nexus — Starter"></div>
+          <button type="submit" class="btn btn-primary">Record demo payment</button>
+        </form>
+      </div></div>
+    </div>
+
+    <div class="page" id="page-orders">
+      <h1 class="page-title">Orders</h1>
+      <p class="page-sub">Local session orders</p>
+      <div class="section"><div class="section-b" style="overflow-x:auto">
+        <table class="table"><thead><tr><th>Ref</th><th>Customer</th><th>Amount</th><th>Status</th><th>Date</th></tr></thead>
+        <tbody id="orders-body"><tr><td colspan="5" style="color:var(--muted)">No orders yet</td></tr></tbody></table>
+      </div></div>
+    </div>
+
+    <div class="page" id="page-docs">
+      <h1 class="page-title">Documentation</h1>
+      <p class="page-sub">Command documents on GitHub</p>
+      <div class="section"><div class="section-b list">
+        <a href="https://github.com/Cortex-Nexus-Sovereign-Industrial-AI/cortex-platform/blob/main/docs/product/CORTEX_AI_NEXUS.md" target="_blank">Cortex AI Nexus Enterprise <span>Official</span></a>
+        <a href="https://github.com/Cortex-Nexus-Sovereign-Industrial-AI/cortex-platform/blob/main/docs/product/TECHNICAL_OVERVIEW_ARCHITECTURE.md" target="_blank">Technical Overview Architecture <span>Spec</span></a>
+        <a href="https://github.com/Cortex-Nexus-Sovereign-Industrial-AI/cortex-platform/blob/main/COMMAND_CENTER.md" target="_blank">Command Center <span>Entry</span></a>
+        <a href="https://github.com/Cortex-Nexus-Sovereign-Industrial-AI/cortex-platform/blob/main/STATUS.md" target="_blank">Live Status <span>Health</span></a>
+        <a href="https://github.com/Cortex-Nexus-Sovereign-Industrial-AI/cortex-platform/blob/main/DEPLOY_CHECKLIST.md" target="_blank">Deploy Checklist <span>Activation</span></a>
+        <a href="https://github.com/Cortex-Nexus-Sovereign-Industrial-AI/cortex-platform" target="_blank">Full repository <span>Source</span></a>
+      </div></div>
+    </div>
+
+    <div class="page" id="page-settings">
+      <h1 class="page-title">Settings</h1>
+      <p class="page-sub">Session and platform information</p>
+      <div class="section"><div class="section-b">
+        <p style="margin-bottom:.75rem"><strong>User:</strong> <span id="set-user">Guest</span></p>
+        <p style="margin-bottom:1rem;color:var(--muted);font-size:.85rem">Cortex AI Nexus · Michael Ujuku Morim · CINIS NEXUS INDUSTRY OGOJA</p>
+        <button class="btn btn-ghost" onclick="signOut()">Sign out</button>
+      </div></div>
+    </div>
+  </main>
+
+  <footer class="footer">© 2026 CINIS NEXUS INDUSTRY OGOJA · Cortex AI Nexus · <a href="https://github.com/Cortex-Nexus-Sovereign-Industrial-AI/cortex-platform">GitHub</a></footer>
+</div>
+
+<script>
+const VOICES={cortex:{name:'Cortex Nexus',greet:'Cortex AI Nexus online. Autonomous industrial command node ready.',replies:['Command acknowledged. Pipeline sequence prepared.','Edge-resilient path mapped for your request.','Infrastructure check complete. Proceeding.']},mike:{name:'MikeComplex AI',greet:'MikeComplex AI — strategy from Ogoja to the world.',replies:['Strong direction. Growth frame ready.','Focus on proof, payments, and presence.','Ship weekly; GitHub is the source of truth.']},builder:{name:'Builder Bot',greet:'Builder Bot ready.',replies:['Prefer Node + Netlify + Paystack webhooks.','Keep secrets in env only.','Structure: app shell, member-dashboard, backend API.']},scout:{name:'Scout AI',greet:'Scout AI reporting.',replies:['Nigerian SME automation demand is rising.','Track Paystack, Shopify, GitHub trust signals.','Agent packs and reports as first SKUs.']}};
+let voice='cortex',signup=false,orders=JSON.parse(localStorage.getItem('cortex_orders_v3')||'[]');
+function log(msg,cls='info'){const el=document.getElementById('activity-log');if(!el)return;const t=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit'});el.innerHTML+=`<div><span style="opacity:.6">[${t}]</span> <span class="${cls}">${msg}</span></div>`;el.scrollTop=el.scrollHeight}
+function clearLog(){document.getElementById('activity-log').innerHTML='';log('Log cleared','warn')}
+function go(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));document.getElementById('page-'+id).classList.add('active');const nav=document.querySelector('.nav-item[data-page="'+id+'"]');if(nav)nav.classList.add('active');log('Navigated to '+id,'info')}
+document.getElementById('nav').addEventListener('click',e=>{const btn=e.target.closest('.nav-item');if(btn)go(btn.dataset.page)});
+function setVoice(v){voice=v;document.querySelectorAll('.voice').forEach(x=>x.classList.toggle('active',x.dataset.v===v));document.getElementById('chat').innerHTML=`<div class="bubble ai"><div class="who">${VOICES[v].name}</div>${VOICES[v].greet}</div>`;log('AI persona → '+VOICES[v].name,'ok')}
+function preset(t){document.getElementById('ai-input').value=t;sendAI()}
+function sendAI(){const input=document.getElementById('ai-input');const msg=input.value.trim();if(!msg)return;const chat=document.getElementById('chat');chat.innerHTML+=`<div class="bubble user"><div class="who">You</div>${esc(msg)}</div>`;input.value='';const v=VOICES[voice];const reply=v.replies[Math.floor(Math.random()*v.replies.length)];setTimeout(()=>{chat.innerHTML+=`<div class="bubble ai"><div class="who">${v.name}</div>${reply}<br><br><em style="color:var(--muted)">Re: ${esc(msg)}</em></div>`;chat.scrollTop=chat.scrollHeight},500)}
+function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML}
+function showApp(user){document.getElementById('auth').classList.add('hidden');document.getElementById('app').style.display='flex';document.getElementById('user-name').textContent=(user.name||'User').split(' ')[0];document.getElementById('user-avatar').textContent=(user.name||'U').charAt(0).toUpperCase();document.getElementById('session-label').textContent=user.isGuest?'Guest':(user.name||'Member').split(' ')[0];document.getElementById('set-user').textContent=user.email||user.name||'Guest';renderOrders();setVoice('cortex');log('Cortex AI Nexus session online','ok');log('AI agents loaded — 4 modules','ok');log(user.isGuest?'Guest access':'Member session','ok')}
+function guestEnter(){const u={name:'Guest',email:'guest@cortex.local',isGuest:true};localStorage.setItem('cortex_user_v3',JSON.stringify(u));showApp(u)}
+function signOut(){localStorage.removeItem('cortex_user_v3');location.reload()}
+document.getElementById('toggle-mode').onclick=e=>{e.preventDefault();signup=!signup;document.getElementById('auth-title').textContent=signup?'Create Account':'Welcome to Cortex AI Nexus';document.getElementById('auth-btn').textContent=signup?'Create Account':'Sign In';document.getElementById('toggle-text').textContent=signup?'Have an account?':'No account?';document.getElementById('toggle-mode').textContent=signup?'Sign in':'Create one';document.getElementById('name-field').style.display=signup?'block':'none'};
+document.getElementById('auth-form').onsubmit=e=>{e.preventDefault();const email=document.getElementById('auth-email').value.trim();const name=signup?(document.getElementById('auth-name').value.trim()||email.split('@')[0]):email.split('@')[0];const u={name,email,isGuest:false};localStorage.setItem('cortex_user_v3',JSON.stringify(u));showApp(u)};
+function fakePay(e){e.preventDefault();const name=document.getElementById('pay-name').value,email=document.getElementById('pay-email').value,amount=+document.getElementById('pay-amount').value,product=document.getElementById('pay-product').value;const ref='CORTEX-DEMO-'+Date.now().toString(36).toUpperCase();orders.unshift({ref,name,email,amount,product,status:'Demo recorded',date:new Date().toLocaleString()});localStorage.setItem('cortex_orders_v3',JSON.stringify(orders));renderOrders();log('Demo payment ₦'+amount.toLocaleString(),'ok');go('orders');return false}
+function renderOrders(){document.getElementById('ord-today').textContent=orders.length;const total=orders.reduce((s,o)=>s+(+o.amount||0),0);document.getElementById('rev-today').textContent='₦'+total.toLocaleString();const tb=document.getElementById('orders-body');if(!orders.length){tb.innerHTML='<tr><td colspan="5" style="color:var(--muted)">No orders yet</td></tr>';return}tb.innerHTML=orders.map(o=>`<tr><td><code>${esc(o.ref)}</code></td><td>${esc(o.name)}</td><td>₦${(+o.amount).toLocaleString()}</td><td>${esc(o.status)}</td><td>${esc(o.date)}</td></tr>`).join('')}
+(function(){const saved=localStorage.getItem('cortex_user_v3');if(saved){try{showApp(JSON.parse(saved))}catch(e){}}})();
+</script>
+</body>
+</html>
