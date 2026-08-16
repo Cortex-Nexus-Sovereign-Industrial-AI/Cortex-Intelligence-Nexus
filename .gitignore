@@ -1,0 +1,38 @@
+# Secrets
+.env
+.env.local
+.env.production
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv
+
+# Logs
+*.log
+webhook_logs.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node (if using Netlify functions)
+node_modules/
+.netlify/
+
+# Build artifacts
+dist/
+build/
