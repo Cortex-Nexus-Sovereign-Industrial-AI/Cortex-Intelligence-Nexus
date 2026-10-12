@@ -1,51 +1,46 @@
 name: Build and Deploy to GitHub Pages
-
 on:
   push:
     branches: [ main ]
-  pull_request:
-
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-
-      - name: Cache Node.js modules
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Run tests
-        run: npm test
-
-      - name: Lint code
-        run: npm run lint
-
-      - name: Build site
-        run: npm run build
-
-      - name: Upload artifact
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Build static site
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p dist/giftvault
+          cp index.html member-dashboard.html styles.css dist/
+          cp giftvault/index.html dist/giftvault/index.html
+          test -s dist/index.html
+          test -s dist/member-dashboard.html
+          test -s dist/styles.css
+          test -s dist/giftvault/index.html
+          grep -q "GiftVault" dist/giftvault/index.html
+      - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: dist
-
   deploy:
+    environment:
+      name: github-pages
+      url: \${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     needs: build
     steps:
       - name: Deploy to GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v4
