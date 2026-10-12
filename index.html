@@ -299,5 +299,12 @@ function fakePay(e){e.preventDefault();const name=document.getElementById('pay-n
 function renderOrders(){document.getElementById('ord-today').textContent=orders.length;const total=orders.reduce((s,o)=>s+(+o.amount||0),0);document.getElementById('rev-today').textContent='₦'+total.toLocaleString();const tb=document.getElementById('orders-body');if(!orders.length){tb.innerHTML='<tr><td colspan="5" style="color:var(--muted)">No orders yet</td></tr>';return}tb.innerHTML=orders.map(o=>`<tr><td><code>${esc(o.ref)}</code></td><td>${esc(o.name)}</td><td>₦${(+o.amount).toLocaleString()}</td><td>${esc(o.status)}</td><td>${esc(o.date)}</td></tr>`).join('')}
 (function(){const saved=localStorage.getItem('cortex_user_v3');if(saved){try{showApp(JSON.parse(saved))}catch(e){}}})();
 </script>
+
+<style id="cinis-giftvault-launcher-style">
+.cinis-giftvault-launcher{position:fixed;right:18px;bottom:18px;z-index:9998;display:inline-flex;align-items:center;gap:9px;padding:12px 15px;border:1px solid #64e6ff55;border-radius:13px;background:#0b1728;color:#eaf7ff;font:700 12px Inter,system-ui,sans-serif;box-shadow:0 12px 32px #0006;text-decoration:none}
+.cinis-giftvault-launcher span{color:#64e6ff;font-size:16px}
+.cinis-giftvault-launcher:hover{border-color:#64e6ff;transform:translateY(-1px)}
+</style>
+<a class="cinis-giftvault-launcher" href="giftvault/" aria-label="Open GiftVault and Ad Auto-Runner">GiftVault &amp; Ad Auto-Runner <span aria-hidden="true">↗</span></a>
 </body>
 </html>
